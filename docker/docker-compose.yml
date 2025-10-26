@@ -1,0 +1,29 @@
+version: "3.9"
+services:
+  dev:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+      args:
+        UID: ${UID-1000}
+        GID: ${GID-1000}
+    image: yocto-dev:scarthgap
+    platform: linux/arm64
+    working_dir: /work
+    environment:
+      - YOCTO_BRANCH=${YOCTO_BRANCH:-scarthgap}
+      - DL_DIR=/work/cache/downloads
+      - SSTATE_DIR=/work/cache/sstate
+      - BB_NUMBER_THREADS=${BB_NUMBER_THREADS:-8}
+      - PARALLEL_MAKE=${PARALLEL_MAKE:--j8}
+    volumes:
+      - ..:/work
+      - yocto-cache:/work/cache
+    tty: true
+    stdin_open: true
+    # Remove if you need to run as root
+    user: "${UID-1000}:${GID-1000}"
+
+volumes:
+  yocto-cache:
+    driver: local

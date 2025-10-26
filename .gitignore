@@ -1,0 +1,16 @@
+# Yocto build outputs
+build/
+cache/
+tmp/
+tmp-glibc/
+downloads/
+sstate-cache/
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Mac
+.DS_Store
