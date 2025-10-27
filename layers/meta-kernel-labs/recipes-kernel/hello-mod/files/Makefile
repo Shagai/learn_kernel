@@ -1,3 +1,10 @@
 obj-m += hello.o
 
-# module.bbclass drives the actual build; this Makefile just declares the object.
+all:
+	$(MAKE) -C $(KERNEL_SRC) M=$(PWD) modules
+
+clean:
+	$(MAKE) -C $(KERNEL_SRC) M=$(PWD) clean
+
+modules_install:
+	$(MAKE) -C $(KERNEL_SRC) M=$(PWD) modules_install

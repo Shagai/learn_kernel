@@ -1,7 +1,7 @@
 SUMMARY = "Simple Hello World out-of-tree kernel module"
 DESCRIPTION = "A minimal example kernel module built with Yocto for learning."
 LICENSE = "MIT"
-LIC_FILES_CHKSUM = "file://LICENSE;md5=1d3b9ff6f7b1b79a6f4d6f4f2f1b6a8b"
+LIC_FILES_CHKSUM = "file://LICENSE;md5=7ae2be7fb1637141840314b51970a9f7"
 
 SRC_URI = " \
     file://hello.c \
@@ -19,4 +19,5 @@ RPROVIDES:${PN} += "kernel-module-hello"
 # Auto-load on boot to verify it works in QEMU
 KERNEL_MODULE_AUTOLOAD += "hello"
 
-EXTRA_OEMAKE += "KERNELRELEASE=${KERNEL_VERSION}" 
+### Let module.bbclass drive kernel build context; no extra vars needed
+# EXTRA_OEMAKE += "KERNELRELEASE=${KERNEL_VERSION}"

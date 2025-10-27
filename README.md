@@ -107,6 +107,25 @@ docker run --rm -it -v $PWD:/work -v $PWD/cache:/work/cache yocto-dev:scarthgap 
   -lc 'source layers/poky/oe-init-build-env /home/builder/build >/dev/null && runqemu nographic slirp'
 ```
 
+## Autoload Demo (automated)
+
+Use an automated demo to boot QEMU and verify the `hello` kernel module autoloads at boot, capturing logs under `out/`.
+
+```bash
+# 1) Ensure images exist (first build takes time)
+docker run --rm -v $PWD:/work -v $PWD/cache:/work/cache yocto-dev:scarthgap \
+  -lc 'scripts/bitbake-internal.sh hello-mod core-image-minimal'
+
+# 2) Run the demo (boots QEMU, logs dmesg and lsmod)
+docker run --rm -it -v $PWD:/work -v $PWD/cache:/work/cache yocto-dev:scarthgap \
+  -lc 'python3 /work/scripts/demo_autoload.py'
+
+# 3) See captured results
+sed -n '1,200p' out/qemu_hello_autoload.log
+```
+
+The demo waits for the login prompt, logs in as `root`, runs `lsmod | grep hello` and `dmesg | grep hello`, saves the outputs, and powers off the VM.
+
 ## Where to Look Next
 
 - Explore `build/tmp/work/.../hello-mod/.../packages-split/` to see packaged artifacts.

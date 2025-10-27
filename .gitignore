@@ -5,6 +5,10 @@ tmp/
 tmp-glibc/
 downloads/
 sstate-cache/
+out/
+.yocto_build_cid
+
+__pycache__/
 
 # Editor
 .vscode/
